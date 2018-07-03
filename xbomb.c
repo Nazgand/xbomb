@@ -303,7 +303,7 @@ void SelectSquare(int x,int y)
     DrawGrid();
    }
  else
-    if(n_think==n_unseen)
+    if(grid_bombs==n_unseen)//allow no-flag wins
        status=GAME_WON;
 }
 
