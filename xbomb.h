@@ -78,6 +78,7 @@ void SelectCellOrAdjacent(int x,int y);
 void SelectAdjacent(int x,int y);
 void MarkBomb(int x,int y);
 void RemoveEmpties(int x, int y);
+int randomInt(int n);
 
 /* In xwindow.c */
 

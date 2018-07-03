@@ -194,7 +194,7 @@ void StartGame(int level,int type)
  
  for(int i=0;i<12;i++) /*generate substitution cipher permutation*/
    {
-    int r=rand()%(12-i);
+    int r=randomInt(12-i);
     int temp=cipher_permutation[r];
     cipher_permutation[r]=cipher_permutation[11-i];
     cipher_permutation[11-i]=temp;
@@ -230,8 +230,8 @@ void HideBombs(int xs,int ys)
  for(i=0;i<grid_bombs;i++)
    {
     do{
-       x=(rand()>>8)%grid_width;
-       y=(rand()>>8)%grid_height;
+       x=randomInt(grid_width);
+       y=randomInt(grid_height);
       }
     while(state[x][y]!=UNSEEN || count_adjacent(x,y,CORRECT));
 
@@ -495,4 +495,15 @@ static int count_adjacent(int x,int y,int flag)
    }
 
  return(n);
+}
+
+/* Returns an integer in the range [0, n).
+ * The distribution of the random numbers is uniform
+ * Uses rand(), and so is affected-by/affects the same seed.
+ */
+int randomInt(int n) {
+ int end = (RAND_MAX / n)*n;
+ int r;
+ while ((r = rand()) >= end);
+ return r % n;
 }
