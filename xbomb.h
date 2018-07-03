@@ -17,7 +17,7 @@
 #ifndef XBOMB_H
 #define XBOMB_H
 
-/* State of each square */
+/* State of each cell */
 
 #define EMPTY         0         /*+ No bomb. +*/
 #define ACTUAL_BOMB  16         /*+ Really is a bomb. +*/
@@ -73,8 +73,8 @@ void StartGame(int level,int type);
 void HideBombs(int xs,int ys);
 void StopGame(void);
 void DrawGrid(void);
-void SelectSquare(int x,int y);
-void SelectSquareOrAdjacent(int x,int y);
+void SelectCell(int x,int y);
+void SelectCellOrAdjacent(int x,int y);
 void SelectAdjacent(int x,int y);
 void MarkBomb(int x,int y);
 void RemoveEmpties(int x, int y);
@@ -84,7 +84,7 @@ void RemoveEmpties(int x, int y);
 void InitialiseX(int *argc,char **argv);
 void FinishUpX(void);
 int ProcessXEvents(void);
-void DrawSquare(int x,int y,unsigned char value);
+void DrawCell(int x,int y,unsigned char value);
 void DisplayHighScores(char *scores[11][4],int which_score);
 void ScaleWindow(void);
 void StartClock(int reset);

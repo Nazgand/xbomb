@@ -258,19 +258,19 @@ void DrawGrid(void)
 
  for(x=0;x<grid_width;x++)
     for(y=0;y<grid_height;y++)
-       DrawSquare(x,y,state[x][y]);
+       DrawCell(x,y,state[x][y]);
 }
 
 
 /*++++++++++++++++++++++++++++++++++++++
-  Select a single square and clear it or explode the bomb.
+  Select a single cell and clear it or explode the bomb.
 
-  int x The location of the square.
+  int x The location of the cell.
 
-  int y The location of the square.
+  int y The location of the cell.
   ++++++++++++++++++++++++++++++++++++++*/
 
-void SelectSquare(int x,int y)
+void SelectCell(int x,int y)
 {
  if(!(state[x][y]&UNSEEN) || state[x][y]&THINK_BOMB || status==GAME_WAIT)
     return;
@@ -309,28 +309,28 @@ void SelectSquare(int x,int y)
 
 
 /*++++++++++++++++++++++++++++++++++++++
-  Select a single square and clear it, explode the bomb or clear the adjacent.
+  Select a single cell and clear it, explode the bomb or clear the adjacent.
 
-  int x The location of the square.
+  int x The location of the cell.
 
-  int y The location of the square.
+  int y The location of the cell.
   ++++++++++++++++++++++++++++++++++++++*/
 
-void SelectSquareOrAdjacent(int x,int y)
+void SelectCellOrAdjacent(int x,int y)
 {
  if(state[x][y]&UNSEEN)
-    SelectSquare(x,y);
+    SelectCell(x,y);
  else /* if(state[x][y]&EMPTY) */
     SelectAdjacent(x,y);
 }
 
 
 /*++++++++++++++++++++++++++++++++++++++
-  Select all of the squares adjacent
+  Select all of the cells adjacent
 
-  int x The location of the square.
+  int x The location of the cell.
 
-  int y The location of the square.
+  int y The location of the cell.
   ++++++++++++++++++++++++++++++++++++++*/
 
 void SelectAdjacent(int x,int y)
@@ -363,18 +363,18 @@ void SelectAdjacent(int x,int y)
           continue;
 
        if(!(state[x+dx][y+dy]&THINK_BOMB))
-          SelectSquare(x+dx,y+dy);
+          SelectCell(x+dx,y+dy);
       }
    }
 }
 
 
 /*++++++++++++++++++++++++++++++++++++++
-  Marks as a bomb the square.
+  Marks as a bomb the cell.
 
-  int x The location of the square.
+  int x The location of the cell.
 
-  int y The location of the square.
+  int y The location of the cell.
   ++++++++++++++++++++++++++++++++++++++*/
 
 void MarkBomb(int x,int y)
@@ -394,7 +394,7 @@ void MarkBomb(int x,int y)
 
  SetUXB(grid_bombs-n_think);
 
- DrawSquare(x,y,state[x][y]);
+ DrawCell(x,y,state[x][y]);
 
  if(n_think==n_unseen)
     status=GAME_WON;
@@ -402,7 +402,7 @@ void MarkBomb(int x,int y)
 
 
 /*++++++++++++++++++++++++++++++++++++++
-  Removes the empty squares around here
+  Removes the empty cells around here
 
   int x Start from this position.
 
@@ -418,7 +418,7 @@ void RemoveEmpties(int x, int y)
 
  state[x][y]&=~UNSEEN;
  n_unseen--;
- DrawSquare(x,y,state[x][y]);
+ DrawCell(x,y,state[x][y]);
 
  if(state[x][y]!=EMPTY)
     return;
@@ -447,7 +447,7 @@ void RemoveEmpties(int x, int y)
 
 
 /*++++++++++++++++++++++++++++++++++++++
-  Count the number of adjacent squares that are bombs.
+  Count the number of adjacent cells that are bombs.
 
   int count_adjacent Returns the number of adjacent tiles with the specified flag.
 

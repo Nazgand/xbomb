@@ -33,7 +33,7 @@
 ! The colour for the uncovered tiles.
 *grid.hidden:		grey50
 
-! The colour for the correctly guessed squares at the end.
+! The colour for the correctly guessed cells at the end.
 *grid.correct:		green
 
 ! The colours for the hi-score table.

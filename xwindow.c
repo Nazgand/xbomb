@@ -87,7 +87,7 @@ static int msecs(void);
 #define GC_NUMBER12    14       /*+ For drawing the number 12 (C) +*/
 #define GC_UNSEEN      15       /*+ For unseen (hidden) tiles. +*/
 #define GC_CORRECT     16       /*+ For correctly guessed tiles at the end.+*/
-#define GC_BLANK       17       /*+ For blank squares. +*/
+#define GC_BLANK       17       /*+ For blank cells. +*/
 #define NUM_GC         18
 
 /*+ A structure to hold the colour and font resource data in. +*/
@@ -401,16 +401,16 @@ int ProcessXEvents(void)
 
 
 /*++++++++++++++++++++++++++++++++++++++
-  Draw a value in the specified square.
+  Draw a value in the specified cell.
 
   int x The X position.
 
   int y The y position.
 
-  unsigned char value The value of the square.
+  unsigned char value The value of the cell.
   ++++++++++++++++++++++++++++++++++++++*/
 
-void DrawSquare(int x,int y,unsigned char value)
+void DrawCell(int x,int y,unsigned char value)
 {
  int xpos=0,ypos=0;
  static char grid_numbers[13][2]={" ","1","2","3","4","5","6","7","8","9","A","B","C"};
@@ -491,7 +491,7 @@ void DrawSquare(int x,int y,unsigned char value)
     XDrawString(display,play_window,gc[gc_number],text_xpos,text_ypos,grid_numbers[(value&~CORRECT)],1);
    }
 
- /* Draw the correct squares at the end. */
+ /* Draw the correct cells at the end. */
 
  if(value&CORRECT)
     which_gc=GC_CORRECT;
@@ -775,7 +775,7 @@ static void mouse_press_proc(Widget w,XtPointer va,XEvent* e,Boolean* vb)
 
  switch(e->xbutton.button)
    {
-   case 1: SelectSquareOrAdjacent(x,y); break;
+   case 1: SelectCellOrAdjacent(x,y); break;
    case 2: SelectAdjacent(x,y); break;
    case 3: MarkBomb(x,y); break;
    }
