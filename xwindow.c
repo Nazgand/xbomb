@@ -48,6 +48,11 @@ extern int grid_width,          /*+ width. +*/
 extern char *levels[NLEVELS],   /*+ levels (difficulty). +*/
             *types[NTYPES];     /*+ types (grid shapes). +*/
 
+/*+ Game modes +*/
+extern int mode_cipher;          /*+ cipher mode toggle. +*/
+extern int cipher_permutation[12];          /*+ cipher permutation. +*/
+static const char *cipher_symbols[12] = {"d", "E", "S", "c", "r", "A", "m", "B", "L", "I", "N", "G"};
+
 static int xoffset,yoffset;
 static int status=0;
 static int unsigned scalex=10,scaley=10;
@@ -55,7 +60,7 @@ static int unsigned pixw,pixh;
 static XtAppContext app_context;
 static Display* display;
 static Window play_window;
-static Widget play_area,clock_w,uxb_w,hiscore,toplevel;
+static Widget play_area,clock_w,uxb_w,cipher,hiscore,toplevel;
 static Widget highscore,highscoresform,highscores[12][4];
 static Pixmap icon_p,bombpix[2]={0,0};
 static XPoint outline[8];
@@ -64,6 +69,7 @@ static void size_expose_proc(Widget w,XtPointer va,XEvent* e,Boolean* vb);
 static void mouse_press_proc(Widget w,XtPointer va,XEvent* e,Boolean* vb);
 static void key_press_proc(Widget w,XtPointer va,XEvent* e,Boolean* vb);
 static void change_status_proc(Widget widget,XtPointer clientData,XtPointer callData);
+static void cipher_proc(Widget widget,XtPointer clientData,XtPointer callData);
 static void hiscore_proc(Widget widget,XtPointer clientData,XtPointer callData);
 static void close_proc(Widget w,XtPointer va,XEvent* e,Boolean* vb);
 static void display_clock(XtPointer p,XtIntervalId i);
@@ -184,7 +190,7 @@ void InitialiseX(int *argc,char **argv)
    }
 
  menu=XtVaCreateManagedWidget("menu",menuButtonWidgetClass,form,
-                              XtNlabel,"Game Type",
+                              XtNlabel,"Grid Type",
                               XtNmenuName,"typemenushell",
                               XtNfromHoriz,menu,XtNfromVert,NULL,
                               XtNleft,XtChainLeft,XtNtop,XtChainTop,XtNright,XtChainLeft,XtNbottom,XtChainTop,
@@ -200,9 +206,16 @@ void InitialiseX(int *argc,char **argv)
     XtAddCallback(item,XtNcallback,change_status_proc,(XtPointer)(GAME_TYPE+i));
    }
 
+ cipher=XtVaCreateManagedWidget("cipher",toggleWidgetClass,form,
+                                 XtNlabel,"Cipher",
+                                 XtNfromHoriz,menu,XtNfromVert,NULL,
+                                 XtNleft,XtChainLeft,XtNtop,XtChainTop,XtNright,XtChainLeft,XtNbottom,XtChainTop,
+                                 NULL);
+ XtAddCallback(cipher,XtNcallback,cipher_proc,NULL);
+
  hiscore=XtVaCreateManagedWidget("hiscore",toggleWidgetClass,form,
                                  XtNlabel,"Hi-Scores",
-                                 XtNfromHoriz,menu,XtNfromVert,NULL,
+                                 XtNfromHoriz,cipher,XtNfromVert,NULL,
                                  XtNleft,XtChainLeft,XtNtop,XtChainTop,XtNright,XtChainLeft,XtNbottom,XtChainTop,
                                  NULL);
  XtAddCallback(hiscore,XtNcallback,hiscore_proc,NULL);
@@ -487,8 +500,9 @@ void DrawCell(int x,int y,unsigned char value)
    {
     int text_xpos=xpos+pixw/2-xoffset;
     int text_ypos=ypos+pixh/2+yoffset;
-    int gc_number=(value&~CORRECT)+GC_NUMBER1-1;  /* Calculate GC_NUMBERx offset. */
-    XDrawString(display,play_window,gc[gc_number],text_xpos,text_ypos,grid_numbers[(value&~CORRECT)],1);
+    char* text_string=mode_cipher?cipher_symbols[cipher_permutation[(value&~CORRECT)-1]]:grid_numbers[(value&~CORRECT)];
+    int gc_number=(mode_cipher?1+cipher_permutation[(value&~CORRECT)-1]:(value&~CORRECT))+GC_NUMBER1-1;  /* Calculate GC_NUMBERx offset. */
+    XDrawString(display,play_window,gc[gc_number],text_xpos,text_ypos,text_string,1);
    }
 
  /* Draw the correct cells at the end. */
@@ -867,6 +881,28 @@ static void key_press_proc(Widget w,XtPointer va,XEvent* e,Boolean* vb)
 static void change_status_proc(Widget widget,XtPointer clientData,XtPointer callData)
 {
  status=(int)clientData;
+}
+
+
+/*++++++++++++++++++++++++++++++++++++++
+  This function toggle the cipher mode.
+
+  Widget widget Not used.
+
+  XtPointer clientData Not used.
+
+  XtPointer callData Not used.
+
+  This function is only ever called from the Xt Intrinsics routines.
+  ++++++++++++++++++++++++++++++++++++++*/
+
+static void cipher_proc(Widget widget,XtPointer clientData,XtPointer callData)
+{
+ if(mode_cipher)
+    mode_cipher=0;
+ else
+    mode_cipher=1;
+ status=GAME_START;
 }
 
 

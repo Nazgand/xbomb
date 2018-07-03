@@ -31,6 +31,10 @@ int    rand(void);
 char *levels[NLEVELS]={"Easy","Medium","Difficult"},      /*+ levels (difficulty). +*/
      *types [NTYPES] ={"Hexagons","Squares","Triangles"}; /*+ types (grid shapes). +*/
 
+/*+ The game modes +*/
+int mode_cipher=0;
+int cipher_permutation[12]={0,1,2,3,4,5,6,7,8,9,10,11};
+
 /*+ The size of the grids +*/
 int widths [NLEVELS]={ 8 ,16 ,30},  /*+ width in tiles. +*/
     heights[NLEVELS]={ 8 ,16 ,16},  /*+ height in tiles. +*/
@@ -187,6 +191,14 @@ void StartGame(int level,int type)
 
  n_unseen=grid_width*grid_height;
  n_think=0;
+ 
+ for(int i=0;i<12;i++) /*generate substitution cipher permutation*/
+   {
+    int r=rand()%(12-i);
+    int temp=cipher_permutation[r];
+    cipher_permutation[r]=cipher_permutation[11-i];
+    cipher_permutation[11-i]=temp;
+   }
 
  status=GAME_READY;
 
