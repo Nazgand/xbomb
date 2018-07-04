@@ -28,13 +28,15 @@ Selects the level to use when starting the game.
 The standard X window options also apply to this program.
 .SH DESCRIPTION
 A game of logical deduction against the clock. The purpose of the game is to find the location of the hidden bombs in a grid.
-Each of the locations in the grid is initially covered, by uncovering a locations, a number or a bomb will be revealed underneath.
+Each of the locations(cells) in the grid is initially covered. By uncovering a location, a number or a bomb will be revealed underneath.
 If a bomb is revealed then the game is finished.
 A number indicates the number of adjacent locations that contain bombs.
 Locations that have not been uncovered but are thought to contain bombs can be marked as such so that they can be identified.
 
 There is a choice of hexagonal, square or triangular units that make up the grid, the level of difficulty increasing as the number of sides decreases.
 In all cases the grids are of the same size and contain the same number of bombs for the same levels.
+
+In cipher mode, the numbers have been encrypted with a substitution cipher. Blank still means zero.
 
 There are three levels to the game:
 .TP
@@ -53,12 +55,12 @@ storing the username, the time to complete the puzzle and the date that it was f
 The game is played with the mouse, with all three buttons having different actions.
 .TP
 .BR Left \ Button
-Uncover the current location if it is hidden or uncover all surrounding
-locations marked as not containing bombs if the cell is already uncovered. The
-first selection made in a game is always a 'safe' cell.
+Uncover the current location if it is hidden. Else, same as the middle mouse button.
+The first selection made in a game is always a 'safe' cell.
 .TP
 .BR Middle \ Button
-Uncover all surrounding locations that are not marked as containing a bomb.
+Uncover all surrounding locations that are not marked as bombs if the number of marked cells equals the displayed number.
+Disabled in cipher mode as the player may not know which number is which.
 .TP
 .BR Right \ Button
 Mark the current grid location as having a hidden bomb (toggle).
@@ -70,6 +72,9 @@ Select level 1, 2 or 3 for the next game.
 .TP
 .BR s
 Start a new game.
+.TP
+.BR c
+Toggle cipher mode
 .TP
 .BR q
 Quit the program.
@@ -102,6 +107,7 @@ The name of the class used is XBomb, the widget hierarchy used is (Widget-Class:
  					smeBSBObject:Hexagon
  					smeBSBObject:Square
  					smeBSBObject:Triangle
+ 			Command:cipher
  			Command:hiscore
  			Command:quit
  			Core:grid
@@ -140,5 +146,6 @@ The colour of the cells that were correctly guessed \- default green
 The font that is used for the number in the grid \- default lucidasans-24
 .SH BUGS
 Triangular and hexagonal grid resizing.
+H,S,T shortcut keys do not work on Linux Mint XFCE.
 .SH AUTHOR
 Andrew M. Bishop.

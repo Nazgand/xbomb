@@ -103,12 +103,16 @@ int main(int argc,char** argv)
       }
 
     for(i=1;i<argc;i++)
-       if(strlen(argv[i])>2 && !strncmp("-hiscore",argv[i],strlen(argv[i])))
+       if(strlen(argv[i])>2 && !strncasecmp("-hiscore",argv[i],strlen(argv[i])))
          {
           grid_type=type;
           PrintHighScores();
           exit(0);
          }
+
+    for(i=1;i<argc;i++)
+       if(strlen(argv[i])>2 && !strncasecmp("-cipher",argv[i],strlen(argv[i])))
+          mode_cipher=1;
    }
 
  t=time(&t);
