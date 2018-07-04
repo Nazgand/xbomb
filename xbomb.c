@@ -349,7 +349,7 @@ void SelectAdjacent(int x,int y)
 {
  int dx,dy,n,dd=(grid_type==GAME_TRIANGLE?2:1);
 
- if(state[x][y]&UNSEEN || status==GAME_WAIT)
+ if(state[x][y]&UNSEEN || status==GAME_WAIT || mode_cipher)
     return;
 
  n=count_adjacent(x,y,THINK_BOMB);

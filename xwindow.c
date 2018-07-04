@@ -70,6 +70,7 @@ static void mouse_press_proc(Widget w,XtPointer va,XEvent* e,Boolean* vb);
 static void key_press_proc(Widget w,XtPointer va,XEvent* e,Boolean* vb);
 static void change_status_proc(Widget widget,XtPointer clientData,XtPointer callData);
 static void cipher_proc(Widget widget,XtPointer clientData,XtPointer callData);
+static void toggle_cipher_mode(void);
 static void hiscore_proc(Widget widget,XtPointer clientData,XtPointer callData);
 static void close_proc(Widget w,XtPointer va,XEvent* e,Boolean* vb);
 static void display_clock(XtPointer p,XtIntervalId i);
@@ -831,6 +832,10 @@ static void key_press_proc(Widget w,XtPointer va,XEvent* e,Boolean* vb)
     status=GAME_DIFFICULT;
     break;
 
+   case XK_c:
+    toggle_cipher_mode();
+    break;
+
    case XK_s:
     if(shift)
        status=GAME_SQUARE;
@@ -897,6 +902,10 @@ static void change_status_proc(Widget widget,XtPointer clientData,XtPointer call
   ++++++++++++++++++++++++++++++++++++++*/
 
 static void cipher_proc(Widget widget,XtPointer clientData,XtPointer callData)
+{
+ toggle_cipher_mode();
+}
+static void toggle_cipher_mode(void)
 {
  if(mode_cipher)
     mode_cipher=0;
