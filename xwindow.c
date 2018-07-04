@@ -1,5 +1,5 @@
 /***************************************
-  XBomb - 'Minesweeper' game - Version 2.2b.
+  XBomb - 'Minesweeper' game - Version 2.3.
 
   All X Window functions.
   ******************/ /******************
@@ -152,7 +152,7 @@ void InitialiseX(int *argc,char **argv)
 
  toplevel=XtVaAppInitialize(&app_context,"XBomb",
                             NULL, (Cardinal)0,argc,argv,NULL,
-                            XtNtitle,"XBomb V2.2b",
+                            XtNtitle,"XBomb V2.3",
                             XtNiconName,"XBomb",
                             NULL);
 
@@ -296,7 +296,7 @@ void InitialiseX(int *argc,char **argv)
  /* The highscore table. */
 
  highscore=XtVaCreatePopupShell("hiscores",topLevelShellWidgetClass,toplevel,
-                                XtNtitle,"XBomb V2.2b High Scores",XtNiconName,"XBomb Hi-scores",
+                                XtNtitle,"XBomb V2.3 High Scores",XtNiconName,"XBomb Hi-scores",
                                 XtNmappedWhenManaged,False,
                                 NULL);
 

@@ -1,7 +1,7 @@
 /***************************************
   $Header: /home/amb/CVS/xbomb/hiscore.c,v 1.13 2008-01-05 19:23:07 amb Exp $
 
-  XBomb - 'Minesweeper' game - Version 2.2.
+  XBomb - 'Minesweeper' game - Version 2.3
 
   Hi-score table management.
   ******************/ /******************

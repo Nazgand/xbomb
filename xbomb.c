@@ -1,5 +1,5 @@
 /***************************************
-  XBomb - 'Minesweeper' game - Version 2.2b.
+  XBomb - 'Minesweeper' game - Version 2.3.
 
   Main function of program - excludes all window interface parts.
   ******************/ /******************
@@ -77,7 +77,7 @@ int main(int argc,char** argv)
  long t;
 
  printf("\n"
-        "XBomb Version 2.2b\n"
+        "XBomb Version 2.3\n"
         "\n"
         "(c) Andrew M. Bishop 1994-2013 [http://www.gedanken.org.uk/software/xbomb/]\n"
         "\n");

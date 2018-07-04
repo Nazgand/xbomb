@@ -1,7 +1,7 @@
 /***************************************
   $Header: /home/amb/CVS/xbomb/xbomb.h,v 1.9 2008-01-05 19:24:16 amb Exp $
 
-  XBomb - 'Minesweeper' game - Version 2.2.
+  XBomb - 'Minesweeper' game - Version 2.3
 
   Global header file.
   ******************/ /******************
