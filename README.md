@@ -84,6 +84,8 @@ make install
 
 And all should be OK.
 
+On Ubuntu, compile.sh installs the needed libraries and makes the xbomb executable.
+
 This program has been tested on the following systems:
 
 Linux 1.x, 2.x
